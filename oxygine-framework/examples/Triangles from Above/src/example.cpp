@@ -1,8 +1,11 @@
 #include "oxygine-framework.h"
 #include "Box2D/Box2D.h"
 #include "Box2DDebugDraw.h"
+#include <iostream>
+#include <list>
 
 using namespace oxygine;
+using namespace std;
 
 //it is our resources
 //in real project you would have more than one Resources declarations. It is important on mobile devices with limited memory and you would load/unload them
@@ -14,6 +17,7 @@ DECLARE_SMART(MainActor, spMainActor);
 
 const float SCALE = 100.0f;
 int score = 0;
+//list<spTriangle> triangleList;
 
 b2Vec2 convert(const Vector2& pos)
 {
@@ -102,6 +106,11 @@ public:
 		fixtureDef.friction = 15.0f; //increased from 0.3f
 
 		//parenting?
+
+
+		//Gravity
+		body->SetGravityScale(0);
+
 		body->CreateFixture(&fixtureDef);
 		body->SetUserData(this);
 	}
@@ -142,11 +151,20 @@ public:
     {
         setSize(getStage()->getSize());
 
+		//debug button
         spButton btn = new Button;
         btn->setX(getWidth() - btn->getWidth() - 3);
         btn->setY(3);
         btn->attachTo(this);
         btn->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::showHideDebug));
+
+		//gravity button
+		spButton gravButton = new Button;
+		gravButton->setX(getWidth() - gravButton->getWidth() - 3);
+		gravButton->setY(70);
+		gravButton->attachTo(this);
+		gravButton->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::enableGravity));
+
 
         addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::click));
 
@@ -193,6 +211,7 @@ public:
         }
     }
 
+	//Used for showing and hiding information about debug
     void showHideDebug(Event* event)
     {
         TouchEvent* te = safeCast<TouchEvent*>(event);
@@ -211,6 +230,15 @@ public:
         _debugDraw->setPriority(1);
     }
 
+	//Enable gravity event
+	void enableGravity(Event* event)
+	{
+		//for each (spTriangle triangle in triangleList)
+		//{
+		//	trua
+		//}
+	}
+
     void click(Event* event)
     {
         TouchEvent* te = safeCast<TouchEvent*>(event);
@@ -223,8 +251,9 @@ public:
 
 			//spawn a triangle
 			spTriangle triangle = new Triangle(_world, te->localPosition);
+			//triangleList.push_back(triangle); //adds the triangle to the end of the list
 			triangle->attachTo(this);
-
+		
 			score++;
         }
 
