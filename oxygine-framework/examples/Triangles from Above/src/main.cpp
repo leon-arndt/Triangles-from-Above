@@ -1,9 +1,11 @@
-/**
+/*
     Attention!
     This file initializes the Oxygine engine.
     If you just started here and don't understand the code completely, feel free to come back later.
     You can start from example.cpp and example.h, which main functions are called from here.
-*/
+
+	test
+	*/
 #include "core/oxygine.h"
 #include "Stage.h"
 #include "DebugActor.h"
