@@ -233,9 +233,19 @@ public:
 	//Enable gravity event
 	void enableGravity(Event* event)
 	{
+		//Get a list of all physics objects		
 		b2Body* body = _world->GetBodyList();
-		body->SetGravityScale(1);
-		body->ApplyForceToCenter(b2Vec2(1, 1), true);
+		
+		while (body)
+		{
+			b2Body* next = body->GetNext();
+			body->SetGravityScale(1);
+			body->ApplyForceToCenter(b2Vec2(1, 1), true);
+
+			//go to the next body in the list
+			body = next;
+		}
+
 	}
 
     void click(Event* event)
