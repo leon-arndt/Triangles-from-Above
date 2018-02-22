@@ -2,9 +2,11 @@
 <resources>
 	<set path = "images" />
 	<atlas>
-		<image file="circle.png"/>
+    <ftfont file="Roboto-Black.ttf" />
+    <image file="circle.png"/>
     <image file="triangle.png"/>
+    <image file="pentagon.png"/>
 		<image file="pen.png" />				
-		<image file="shot.png" />	
+		<image file="shot.png" />
 	</atlas>
 </resources>

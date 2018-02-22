@@ -116,6 +116,55 @@ public:
 	}
 };
 
+//Pentagon Background
+DECLARE_SMART(Pentagon, spPentagon);
+class Pentagon : public Sprite
+{
+public:
+	Pentagon(b2World* world, const Vector2& pos, float scale = 1)
+	{
+		setResAnim(gameResources.getResAnim("pentagon")); //set the sprice for the object
+		setAnchor(Vector2(0.5f, 0.5f)); //was 0.5f, 0.5f
+		setTouchChildrenEnabled(true); //was false
+
+		b2BodyDef bodyDef;
+		bodyDef.type = b2_staticBody; //b2_dynamicBody
+		bodyDef.position = convert(pos);
+
+		b2Body* body = world->CreateBody(&bodyDef);
+
+		setUserData(body);
+		setScale(scale);
+
+		b2PolygonShape shape;
+		b2Vec2 vertices[5];
+
+		//1, 1, is too large
+		vertices[0].Set(0, -0.5);
+		vertices[1].Set(0.55, 0.5); 
+		vertices[2].Set(1, 1);
+		vertices[3].Set(3, -0.5);
+		vertices[4].Set(0, 0.5);
+		shape.Set(vertices, 5);
+		//fixtureDef.shape = &shape; //again below
+
+		shape.m_radius = getWidth() / SCALE / 20 * scale; // /2, later / 8
+
+		b2FixtureDef fixtureDef;
+		fixtureDef.shape = &shape;
+		fixtureDef.density = 10.0f; //increased from 1f
+		fixtureDef.friction = 15.0f; //increased from 0.3f
+
+									 //parenting?
+
+
+									 //Gravity
+		body->SetGravityScale(0);
+
+		//body->CreateFixture(&fixtureDef); /7was
+		body->SetUserData(this);
+	}
+};
 DECLARE_SMART(Static, spStatic);
 class Static : public Box9Sprite
 {
@@ -165,7 +214,26 @@ public:
 		gravButton->attachTo(this);
 		gravButton->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::enableGravity));
 
+		//restart button
+		spButton restartButton = new Button;
+		restartButton->setX(getWidth() - restartButton->getWidth() - 3);
+		restartButton->setY(140);
+		restartButton->attachTo(this);
+		restartButton->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::restart));
 
+
+		//Write some text
+
+		//ResFont *font = gameResources.getResFont("Roboto-Black");
+
+		spTextField text = new TextField();
+		text->attachTo(getStage());
+		text->setPosition(Vector2(50.0f, 8.0f));
+		//text->setFont(font);
+		text->setFontSize(30);
+		text->setText("Level 1");
+
+		//Event listener for clicking
         addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::click));
 
 
@@ -178,6 +246,8 @@ public:
 		//Adds a circle at the beginning of the game?
         //spCircle circle = new Circle(_world, getSize() / 2, 1);//circle
         //addChild(circle);
+		spPentagon pentagon = new Pentagon(_world, getSize() / 2 + Vector2(0.0f, 92.0f), 1);
+		addChild(pentagon);
     }
 
     void doUpdate(const UpdateState& us)
@@ -246,6 +316,12 @@ public:
 			body = next;
 		}
 
+	}
+
+	//restart event
+	void restart(Event* event)
+	{
+		
 	}
 
     void click(Event* event)
