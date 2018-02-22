@@ -17,7 +17,7 @@ DECLARE_SMART(MainActor, spMainActor);
 
 const float SCALE = 100.0f;
 int score = 0;
-//list<spTriangle> triangleList;
+//list<spTriangle> triangleList; //unknown size, valid template type?
 
 b2Vec2 convert(const Vector2& pos)
 {
@@ -233,10 +233,9 @@ public:
 	//Enable gravity event
 	void enableGravity(Event* event)
 	{
-		//for each (spTriangle triangle in triangleList)
-		//{
-		//	trua
-		//}
+		b2Body* body = _world->GetBodyList();
+		body->SetGravityScale(1);
+		body->ApplyForceToCenter(b2Vec2(1, 1), true);
 	}
 
     void click(Event* event)
