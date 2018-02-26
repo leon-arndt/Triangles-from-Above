@@ -338,7 +338,26 @@ public:
 	//restart event
 	void restart(Event* event)
 	{
+		b2Body* body = _world->GetBodyList();
 		
+		while (body)
+		{
+			Actor* actor = (Actor*)body->GetUserData();
+			b2Body* next = body->GetNext();
+			if (actor)
+			{
+				//remove all triangles (restart the level)
+				if (actor->getY() < getHeight() -50)
+				{
+					body->SetUserData(0);
+					_world->DestroyBody(body);
+
+					actor->detach();
+				}
+			}
+
+			body = next;
+		}
 	}
 
 	//next level event
