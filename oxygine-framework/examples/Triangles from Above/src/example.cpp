@@ -171,6 +171,7 @@ public:
 		body->SetUserData(this);
 	}
 };
+
 DECLARE_SMART(Static, spStatic);
 class Static : public Box9Sprite
 {
@@ -204,14 +205,18 @@ public:
 
     MainActor(): _world(0)
     {
-        setSize(getStage()->getSize());
+        /// BUTTONS AND UI
+
+		setSize(getStage()->getSize());
 
 		//debug button
-        spButton btn = new Button;
+        /*
+		spButton btn = new Button;
         btn->setX(getWidth() - btn->getWidth() - 3);
         btn->setY(3);
         btn->attachTo(this);
         btn->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::showHideDebug));
+		*/
 
 		//gravity button
 		spButton gravButton = new Button;
@@ -227,17 +232,24 @@ public:
 		restartButton->attachTo(this);
 		restartButton->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::restart));
 
+		//next level button
+		spButton nextLevelButton = new Button;
+		nextLevelButton->setX(getWidth() - restartButton->getWidth() - 3);
+		nextLevelButton->setY(210);
+		nextLevelButton->attachTo(this);
+		nextLevelButton->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::nextLevel));
 
-		//Write some text
+
+		//Write some text on the screen
 
 		//ResFont *font = gameResources.getResFont("Roboto-Black");
-
 		spTextField text = new TextField();
 		text->attachTo(getStage());
 		text->setPosition(Vector2(50.0f, 8.0f));
 		//text->setFont(font);
 		text->setFontSize(30);
 		text->setText("Level 1: Spawn Triangles by clicking");
+
 
 		//Event listener for clicking
         addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::click));
@@ -329,6 +341,12 @@ public:
 		
 	}
 
+	//next level event
+	void nextLevel(Event* event)
+	{
+		
+	}
+
     void click(Event* event)
     {
         TouchEvent* te = safeCast<TouchEvent*>(event);
@@ -398,7 +416,7 @@ void example_init()
 
 	//background
 	spSprite background = new Sprite;
-	background->setResAnim(gameResources.getResAnim("pentagon"));
+	background->setResAnim(gameResources.getResAnim("level1"));
 	background->setAnchor(Vector2(0.5f, 1.0f));
 	background->setPosition(Vector2(480, 610.0f));
 	background->attachTo(actor);

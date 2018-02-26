@@ -8,5 +8,8 @@
     <image file="pentagon.png"/>
 		<image file="pen.png" />				
 		<image file="shot.png" />
+    <image file="level1.png" />
+    <image file="level2.png" />
+    <image file="level3.png" />x
 	</atlas>
 </resources>
