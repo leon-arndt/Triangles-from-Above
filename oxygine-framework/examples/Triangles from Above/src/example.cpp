@@ -220,27 +220,52 @@ public:
 
 		//gravity button
 		spButton gravButton = new Button;
-		gravButton->setX(getWidth() - gravButton->getWidth() - 3);
+		gravButton->setX(getWidth() - gravButton->getWidth() - 5);
 		gravButton->setY(70);
 		gravButton->attachTo(this);
 		gravButton->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::enableGravity));
 
+		spTextField gravButtonText = new TextField();
+		gravButtonText->attachTo(getStage());
+		gravButtonText->setPosition(gravButton->getPosition() + Vector2(-120.0f, 6.0f));
+		gravButtonText->setFontSize(30);
+		gravButtonText->setPriority(32000); //Ensures the text is drawn on top
+		gravButtonText->setText("Gravity");
+
+
 		//restart button
 		spButton restartButton = new Button;
-		restartButton->setX(getWidth() - restartButton->getWidth() - 3);
+		restartButton->setX(getWidth() - restartButton->getWidth() - 5);
 		restartButton->setY(140);
 		restartButton->attachTo(this);
 		restartButton->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::restart));
 
+		spTextField restartButtonText = new TextField();
+		restartButtonText->attachTo(getStage());
+		restartButtonText->setPosition(restartButton->getPosition() + Vector2(-120.0f, 6.0f));
+		restartButtonText->setFontSize(30);
+		restartButtonText->setPriority(32000); //Ensures the text is drawn on top
+		restartButtonText->setText("Restart");
+
+
 		//next level button
 		spButton nextLevelButton = new Button;
-		nextLevelButton->setX(getWidth() - restartButton->getWidth() - 3);
+		nextLevelButton->setX(getWidth() - restartButton->getWidth() - 5);
 		nextLevelButton->setY(210);
 		nextLevelButton->attachTo(this);
 		nextLevelButton->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::nextLevel));
 
+		spTextField levelButtonText = new TextField();
+		levelButtonText->attachTo(getStage());
+		levelButtonText->setPosition(nextLevelButton->getPosition() + Vector2(-120.0f, 6.0f));
+		levelButtonText->setFontSize(30);
+		levelButtonText->setPriority(32000); //Ensures the text is drawn on top
+		levelButtonText->setText("Level");
 
-		//Write some text on the screen
+
+
+
+		//Write some misc text on the screen
 
 		//ResFont *font = gameResources.getResFont("Roboto-Black");
 		spTextField text = new TextField();
@@ -349,6 +374,7 @@ public:
 				//remove all triangles (restart the level)
 				if (actor->getY() < getHeight() -50)
 				{
+					//body->ApplyForceToCenter(b2Vec2(std::rand() * 10000.0f, std::rand() * -10000.0f), true);
 					body->SetUserData(0);
 					_world->DestroyBody(body);
 
