@@ -17,7 +17,10 @@ DECLARE_SMART(MainActor, spMainActor);
 
 
 const float SCALE = 100.0f;
+const int LEVELCOUNT = 3;
 int score = 0;
+int currentLevel = 0;
+
 //list<spTriangle> triangleList; //unknown size, valid template type?
 
 //spTriangle triangleArray[256];
@@ -202,6 +205,7 @@ class MainActor: public Actor
 public:
     b2World* _world;
     spBox2DDraw _debugDraw;
+	spSprite background;
 
     MainActor(): _world(0)
     {
@@ -289,6 +293,14 @@ public:
 		//Adds a pentagon at the beginning of the game?
 		//spPentagon pentagon = new Pentagon(_world, getSize() / 2 + Vector2(0.0f, 92.0f), 1);
 		//addChild(pentagon);
+
+		//background moved to here
+		background = new Sprite; //had a type before
+		background->setResAnim(gameResources.getResAnim("level1"));
+		background->setAnchor(Vector2(0.5f, 1.0f));
+		background->setPosition(Vector2(480, 610.0f));
+		addChild(background);
+		//background->attachTo(actor);
     }
 
 	//Update loop for the world
@@ -389,6 +401,21 @@ public:
 	//next level event
 	void nextLevel(Event* event)
 	{
+		//loop through the levels
+		currentLevel = (currentLevel + 1) % LEVELCOUNT;
+		
+		//simple switch case to show the correct level
+		switch (currentLevel) {
+		case 0:
+			background->setResAnim(gameResources.getResAnim("level1"));
+			break;
+		case 1:
+			background->setResAnim(gameResources.getResAnim("level2"));
+			break;
+		case 2:
+			background->setResAnim(gameResources.getResAnim("level3"));
+			break;
+		}
 		
 	}
 
@@ -398,9 +425,6 @@ public:
 
 		if (event->target.get() == this)
 		{
-			//spawn a circle
-			//spCircle circle = new Circle(_world, te->localPosition);
-			//circle->attachTo(this);
 
 			//spawn a triangle
 			spTriangle triangle = new Triangle(_world, te->localPosition);
@@ -459,12 +483,12 @@ void example_init()
     getStage()->addChild(actor);
 
 
-	//background
-	spSprite background = new Sprite;
-	background->setResAnim(gameResources.getResAnim("level1"));
-	background->setAnchor(Vector2(0.5f, 1.0f));
-	background->setPosition(Vector2(480, 610.0f));
-	background->attachTo(actor);
+	//background moved from here
+	//spSprite background = new Sprite;
+	//background->setResAnim(gameResources.getResAnim("level1"));
+	//background->setAnchor(Vector2(0.5f, 1.0f));
+	//background->setPosition(Vector2(480, 610.0f));
+	//background->attachTo(actor);
 }
 
 void example_destroy()
