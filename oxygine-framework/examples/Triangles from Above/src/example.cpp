@@ -237,7 +237,7 @@ public:
 		text->setPosition(Vector2(50.0f, 8.0f));
 		//text->setFont(font);
 		text->setFontSize(30);
-		text->setText("Level 1");
+		text->setText("Level 1: Spawn Triangles by clicking");
 
 		//Event listener for clicking
         addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::click));
@@ -249,11 +249,9 @@ public:
         spStatic ground = new Static(_world, RectF(getWidth() / 2, getHeight() - 10, getWidth() - 100, 30));
         addChild(ground);
 
-		//Adds a circle at the beginning of the game?
-        //spCircle circle = new Circle(_world, getSize() / 2, 1);//circle
-        //addChild(circle);
-		spPentagon pentagon = new Pentagon(_world, getSize() / 2 + Vector2(0.0f, 92.0f), 1);
-		addChild(pentagon);
+		//Adds a pentagon at the beginning of the game?
+		//spPentagon pentagon = new Pentagon(_world, getSize() / 2 + Vector2(0.0f, 92.0f), 1);
+		//addChild(pentagon);
     }
 
 	//Update loop for the world
@@ -396,6 +394,14 @@ void example_init()
     spMainActor actor = new MainActor;
     //and add it to Stage as child
     getStage()->addChild(actor);
+
+
+	//background
+	spSprite background = new Sprite;
+	background->setResAnim(gameResources.getResAnim("pentagon"));
+	background->setAnchor(Vector2(0.5f, 1.0f));
+	background->setPosition(Vector2(480, 610.0f));
+	background->attachTo(actor);
 }
 
 void example_destroy()
