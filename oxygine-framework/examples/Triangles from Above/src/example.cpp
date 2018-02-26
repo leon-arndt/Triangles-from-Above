@@ -3,6 +3,7 @@
 #include "Box2DDebugDraw.h"
 #include <iostream>
 #include <list>
+#include <vector>
 
 using namespace oxygine;
 using namespace std;
@@ -18,6 +19,9 @@ DECLARE_SMART(MainActor, spMainActor);
 const float SCALE = 100.0f;
 int score = 0;
 //list<spTriangle> triangleList; //unknown size, valid template type?
+
+//spTriangle triangleArray[256];
+//std::vector<spTriangle> triangleArray;
 
 b2Vec2 convert(const Vector2& pos)
 {
@@ -70,6 +74,8 @@ class Triangle : public Sprite
 public:
 	Triangle(b2World* world, const Vector2& pos, float scale = 1)
 	{
+		bool alive = true;
+		
 		setResAnim(gameResources.getResAnim("triangle")); //set the sprice for the object
 		setAnchor(Vector2(0.5f, 0.5f)); //was 0.5f, 0.5f
 		setTouchChildrenEnabled(false);
@@ -250,6 +256,7 @@ public:
 		addChild(pentagon);
     }
 
+	//Update loop for the world
     void doUpdate(const UpdateState& us)
     {
         //in real project you should make steps with fixed dt, check box2d documentation
@@ -267,7 +274,7 @@ public:
                 actor->setPosition(convert(pos));
                 actor->setRotation(body->GetAngle());
 
-                //remove fallen bodies
+                //remove fallen bodies (outside the game view)
                 if (actor->getY() > getHeight() + 50)
                 {
                     body->SetUserData(0);
@@ -328,24 +335,30 @@ public:
     {
         TouchEvent* te = safeCast<TouchEvent*>(event);
 
-        if (event->target.get() == this)
-        {
-            //spawn a circle
+		if (event->target.get() == this)
+		{
+			//spawn a circle
 			//spCircle circle = new Circle(_world, te->localPosition);
-            //circle->attachTo(this);
+			//circle->attachTo(this);
 
 			//spawn a triangle
 			spTriangle triangle = new Triangle(_world, te->localPosition);
-			//triangleList.push_back(triangle); //adds the triangle to the end of the list
+			//triangleArray.push_back(triangle); //adds the triangle to the end of the list			
 			triangle->attachTo(this);
-		
-			score++;
         }
 
         if (event->target->getUserData())
         {
-            //shot to circle
-            spActor actor = safeSpCast<Actor>(event->target);
+            //shot to triangle: this deletes the triangle
+			spActor actor = safeSpCast<Actor>(event->target);
+			b2Body* body = (b2Body*)actor->getUserData();
+
+			body->SetUserData(0);
+			_world->DestroyBody(body);
+
+			actor->detach();
+
+            /*spActor actor = safeSpCast<Actor>(event->target);
             b2Body* body = (b2Body*)actor->getUserData();
 
             Vector2 dir = actor->getPosition() - te->localPosition;
@@ -358,10 +371,15 @@ public:
             Vector2 local = actor->parent2local(te->localPosition);
             sprite->setPosition(local);
             sprite->setAnchor(Vector2(0.5f, 0.5f));
-            sprite->attachTo(actor);
+            sprite->attachTo(actor);*/
         }
     }
 };
+
+//MOVED TRIANGLE TO HERE
+
+
+
 
 void example_preinit()
 {
