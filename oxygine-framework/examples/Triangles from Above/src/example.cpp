@@ -401,6 +401,7 @@ public:
 	//next level event
 	void nextLevel(Event* event)
 	{
+		
 		//loop through the levels
 		currentLevel = (currentLevel + 1) % LEVELCOUNT;
 		
