@@ -3,6 +3,7 @@
 	<set path = "images" />
 	<atlas>
     <ftfont file="Roboto-Black.ttf" />
+    
     <image file="circle.png"/>
     <image file="triangle.png"/>
     <image file="pentagon.png"/>
@@ -12,4 +13,8 @@
     <image file="level2.png" />
     <image file="level3.png" />x
 	</atlas>
+
+<!--FONTS GO HERE-->
+	<set path = "fonts" />
+	<font file="normal.fnt"/>
 </resources>

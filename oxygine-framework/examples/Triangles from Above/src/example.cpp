@@ -191,6 +191,7 @@ public:
 		gravButtonText->setPosition(gravButton->getPosition() + Vector2(-120.0f, 6.0f));
 		gravButtonText->setFontSize(30);
 		gravButtonText->setPriority(32000); //Ensures the text is drawn on top
+		gravButtonText->setFont(gameResources.getResFont("normal"));
 		gravButtonText->setText("Gravity");
 
 
@@ -206,6 +207,7 @@ public:
 		restartButtonText->setPosition(restartButton->getPosition() + Vector2(-120.0f, 6.0f));
 		restartButtonText->setFontSize(30);
 		restartButtonText->setPriority(32000); //Ensures the text is drawn on top
+		restartButtonText->setFont(gameResources.getResFont("normal"));
 		restartButtonText->setText("Restart");
 
 
@@ -221,6 +223,7 @@ public:
 		levelButtonText->setPosition(nextLevelButton->getPosition() + Vector2(-120.0f, 6.0f));
 		levelButtonText->setFontSize(30);
 		levelButtonText->setPriority(32000); //Ensures the text is drawn on top
+		levelButtonText->setFont(gameResources.getResFont("normal"));
 		levelButtonText->setText("Level");
 
 
@@ -231,9 +234,11 @@ public:
 		//ResFont *font = gameResources.getResFont("Roboto-Black");
 		spTextField text = new TextField();
 		text->attachTo(getStage());
-		text->setPosition(Vector2(50.0f, 8.0f));
+		text->setPosition(Vector2(480, 16.0f));
 		//text->setFont(font);
-		text->setFontSize(30);
+		text->setFontSize(40);
+		text->setHAlign(TextStyle::HALIGN_MIDDLE);
+		text->setFont(gameResources.getResFont("normal"));
 		text->setText("Spawn Triangles by Clicking");
 
 
