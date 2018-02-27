@@ -17,8 +17,8 @@ Triangles from Above was created for a homework assignment at the technical univ
 - 5 Levels
 
 ## Technology
-- Oxygine
-- Box2D
+- Oxygine: Cros-Platform 2D C++ Game Engine
+- Box2D: A 2D Physics Engine for Games
 - Safe XML Resource Loading
 - Bitmap fonts using BMFont
 
