@@ -16,5 +16,5 @@
 
 <!--FONTS GO HERE-->
 	<set path = "fonts" />
-	<font file="normal.fnt"/>
+	<font file="slabo.fnt"/>
 </resources>

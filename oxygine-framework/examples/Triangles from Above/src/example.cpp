@@ -182,48 +182,48 @@ public:
 		//gravity button
 		spButton gravButton = new Button;
 		gravButton->setX(getWidth() - gravButton->getWidth() - 5);
-		gravButton->setY(70);
+		gravButton->setY(90);
 		gravButton->attachTo(this);
 		gravButton->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::enableGravity));
 
 		spTextField gravButtonText = new TextField();
 		gravButtonText->attachTo(getStage());
-		gravButtonText->setPosition(gravButton->getPosition() + Vector2(-120.0f, 6.0f));
+		gravButtonText->setPosition(gravButton->getPosition() + Vector2(-90.0f, 0));
 		gravButtonText->setFontSize(30);
 		gravButtonText->setPriority(32000); //Ensures the text is drawn on top
-		gravButtonText->setFont(gameResources.getResFont("normal"));
+		gravButtonText->setFont(gameResources.getResFont("slabo"));
 		gravButtonText->setText("Gravity");
 
 
 		//restart button
 		spButton restartButton = new Button;
 		restartButton->setX(getWidth() - restartButton->getWidth() - 5);
-		restartButton->setY(140);
+		restartButton->setY(160);
 		restartButton->attachTo(this);
 		restartButton->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::restart));
 
 		spTextField restartButtonText = new TextField();
 		restartButtonText->attachTo(getStage());
-		restartButtonText->setPosition(restartButton->getPosition() + Vector2(-120.0f, 6.0f));
+		restartButtonText->setPosition(restartButton->getPosition() + Vector2(-90.0f, 0));
 		restartButtonText->setFontSize(30);
 		restartButtonText->setPriority(32000); //Ensures the text is drawn on top
-		restartButtonText->setFont(gameResources.getResFont("normal"));
+		restartButtonText->setFont(gameResources.getResFont("slabo"));
 		restartButtonText->setText("Restart");
 
 
 		//next level button
 		spButton nextLevelButton = new Button;
 		nextLevelButton->setX(getWidth() - restartButton->getWidth() - 5);
-		nextLevelButton->setY(210);
+		nextLevelButton->setY(230);
 		nextLevelButton->attachTo(this);
 		nextLevelButton->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::nextLevel));
 
 		spTextField levelButtonText = new TextField();
 		levelButtonText->attachTo(getStage());
-		levelButtonText->setPosition(nextLevelButton->getPosition() + Vector2(-120.0f, 6.0f));
+		levelButtonText->setPosition(nextLevelButton->getPosition() + Vector2(-90.0f, 0));
 		levelButtonText->setFontSize(30);
 		levelButtonText->setPriority(32000); //Ensures the text is drawn on top
-		levelButtonText->setFont(gameResources.getResFont("normal"));
+		levelButtonText->setFont(gameResources.getResFont("slabo"));
 		levelButtonText->setText("Level");
 
 
@@ -234,11 +234,11 @@ public:
 		//ResFont *font = gameResources.getResFont("Roboto-Black");
 		spTextField text = new TextField();
 		text->attachTo(getStage());
-		text->setPosition(Vector2(480, 16.0f));
+		text->setPosition(Vector2(480, 12.0f));
 		//text->setFont(font);
-		text->setFontSize(40);
+		text->setFontSize(48);
 		text->setHAlign(TextStyle::HALIGN_MIDDLE);
-		text->setFont(gameResources.getResFont("normal"));
+		text->setFont(gameResources.getResFont("slabo"));
 		text->setText("Spawn Triangles by Clicking");
 
 
