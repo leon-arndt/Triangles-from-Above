@@ -113,7 +113,7 @@
   <ItemGroup>
     <ClCompile Include="../src/Box2DDebugDraw.cpp" />
     <ClCompile Include="../src/main.cpp" />
-    <ClCompile Include="../src/example.cpp" />
+    <ClCompile Include="..\src\game.cpp" />
     <ClCompile Include="..\box2d\Box2D\Collision\b2BroadPhase.cpp" />
     <ClCompile Include="..\box2d\Box2D\Collision\b2CollideCircle.cpp" />
     <ClCompile Include="..\box2d\Box2D\Collision\b2CollideEdge.cpp" />
@@ -163,7 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="../src/Box2DDebugDraw.h" />
-    <ClInclude Include="../src/example.h" />
+    <ClInclude Include="..\src\game.h" />
     <ClInclude Include="..\box2d\Box2D\Collision\b2BroadPhase.h" />
     <ClInclude Include="..\box2d\Box2D\Collision\b2Collision.h" />
     <ClInclude Include="..\box2d\Box2D\Collision\b2Distance.h" />

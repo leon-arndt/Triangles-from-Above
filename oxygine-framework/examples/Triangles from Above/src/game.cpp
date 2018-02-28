@@ -343,11 +343,11 @@ public:
     }
 };
 
-void example_preinit()
+void game_preinit()
 {
 }
 
-void example_init()
+void game_init()
 {
     //load xml file with resources definition
     gameResources.loadXML("res.xml");
@@ -360,12 +360,12 @@ void example_init()
     getStage()->addChild(actor);
 }
 
-void example_destroy()
+void game_destroy()
 {
     gameResources.free();
 }
 
-void example_update()
+void game_update()
 {
 
 }

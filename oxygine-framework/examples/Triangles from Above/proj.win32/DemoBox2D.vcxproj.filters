@@ -21,9 +21,6 @@
     <ClCompile Include="../src/main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="../src/example.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\box2d\Box2D\Dynamics\b2World.cpp">
       <Filter>box2d</Filter>
     </ClCompile>
@@ -165,11 +162,11 @@
     <ClCompile Include="../src/Box2DDebugDraw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="../src/example.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\box2d\Box2D\Common\b2BlockAllocator.h">
       <Filter>box2d</Filter>
     </ClInclude>
@@ -309,6 +306,9 @@
       <Filter>box2d</Filter>
     </ClInclude>
     <ClInclude Include="../src/Box2DDebugDraw.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
