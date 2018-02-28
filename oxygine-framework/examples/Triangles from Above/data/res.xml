@@ -2,17 +2,16 @@
 <resources>
 	<set path = "images" />
 	<atlas>
-    <ftfont file="Roboto-Black.ttf" />
-    
+    <!--Images used by the game, including the different levels-->
     <image file="circle.png"/>
     <image file="triangle.png"/>
-    <image file="pentagon.png"/>
 		<image file="pen.png" />				
 		<image file="shot.png" />
     <image file="level1.png" />
     <image file="level2.png" />
-    <image file="level3.png" />x
-    <image file="level4.png" />x
+    <image file="level3.png" />
+    <image file="level4.png" />
+    <image file="level5.png" />
   </atlas>
 
 <!--FONTS GO HERE-->
