@@ -17,16 +17,11 @@ DECLARE_SMART(MainActor, spMainActor);
 
 
 const float SCALE = 100.0f;
-const int LEVELCOUNT = 4;
+const int LEVELCOUNT = 5;
 
 int currentLevel = 0;
 
-//list<spTriangle> triangleList; //unknown size, valid template type?
-
-//spTriangle triangleArray[256];
-//std::vector<spTriangle> triangleVector;
-//Triangle triangle(Triangle::no_init);
-
+//Converting between Oxygine and Box2D vectors
 b2Vec2 convert(const Vector2& pos)
 {
     return b2Vec2(pos.x / SCALE, pos.y / SCALE);
@@ -38,49 +33,12 @@ Vector2 convert(const b2Vec2& pos)
 }
 
 
-// Circles
-DECLARE_SMART(Circle, spCircle);
-class Circle : public Sprite
-{
-public:
-    Circle(b2World* world, const Vector2& pos, float scale = 1)
-    {
-        setResAnim(gameResources.getResAnim("circle")); //set the sprice for the object
-        setAnchor(Vector2(0.5f, 0.5f));
-        setTouchChildrenEnabled(false);
-
-        b2BodyDef bodyDef;
-        bodyDef.type = b2_dynamicBody;
-        bodyDef.position = convert(pos);
-
-        b2Body* body = world->CreateBody(&bodyDef);
-
-        setUserData(body);
-
-        setScale(scale);
-
-        b2CircleShape shape; //could be where the shape is defined
-        shape.m_radius = getWidth() / SCALE / 2 * scale;
-
-        b2FixtureDef fixtureDef;
-        fixtureDef.shape = &shape;
-        fixtureDef.density = 1.0f;
-        fixtureDef.friction = 0.6f; //increased from 0.3f
-
-        body->CreateFixture(&fixtureDef);
-        body->SetUserData(this);
-    }
-};
-
-//Triangles
+// The triangle class which handles the Box2D and Oxygine functionaliy of the actor game object
 DECLARE_SMART(Triangle, spTriangle);
 class Triangle : public Sprite
 {
-	//struct no_init_t {};
 
 public:
-	//no_init_t no_init;
-	//Triangle(no_init_t) {}
 	Triangle(b2World* world, const Vector2& pos, float scale = 1)
 	{
 		bool alive = true;
@@ -94,24 +52,17 @@ public:
 		bodyDef.position = convert(pos);
 
 		b2Body* body = world->CreateBody(&bodyDef);
-
 		setUserData(body);
-
 		setScale(scale);
 
-		//b2PolygonShape shape;
-		//b2CircleShape shape; //could be where the shape is defined
-
-		//b2FixtureDef fixtureDef; //again below
+		//Define the shape and vertices of the triangle
 		b2PolygonShape shape;
 		b2Vec2 vertices[3];
 
-		//1, 1, is too large
 		vertices[0].Set(0, -0.5);
 		vertices[1].Set(0.55, 0.5); // made wider to be same-length
 		vertices[2].Set(-0.55, 0.5); // made wider to be same-length
 		shape.Set(vertices, 3);
-		//fixtureDef.shape = &shape; //again below
 
 		shape.m_radius = getWidth() / SCALE / 20 * scale; // /2, later / 8
 
@@ -119,8 +70,6 @@ public:
 		fixtureDef.shape = &shape;
 		fixtureDef.density = 10.0f; //increased from 1f
 		fixtureDef.friction = 15.0f; //increased from 0.3f
-
-		//parenting?
 
 
 		//Gravity
@@ -166,18 +115,9 @@ public:
 
     MainActor(): _world(0)
     {
-        /// BUTTONS AND UI
+        //BUTTONS AND UI
 
 		setSize(getStage()->getSize());
-
-		//debug button
-        /*
-		spButton btn = new Button;
-        btn->setX(getWidth() - btn->getWidth() - 3);
-        btn->setY(3);
-        btn->attachTo(this);
-        btn->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::showHideDebug));
-		*/
 
 		//gravity button
 		spButton gravButton = new Button;
@@ -233,31 +173,24 @@ public:
 
 
 		//Write some misc text on the screen
-
-		//ResFont *font = gameResources.getResFont("Roboto-Black");
 		spTextField text = new TextField();
 		text->attachTo(getStage());
 		text->setPosition(Vector2(480, 12.0f));
-		//text->setFont(font);
 		text->setFontSize(48);
 		text->setHAlign(TextStyle::HALIGN_MIDDLE);
 		text->setFont(gameResources.getResFont("slabo"));
 		text->setText("Spawn Triangles by Clicking");
 
 
-		//Event listener for clicking
+		//Event listener for clicking (Event sourcing)
         addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::click));
 
-
+		
         _world = new b2World(b2Vec2(0, 10));
 
 
         spStatic ground = new Static(_world, RectF(getWidth() / 2, getHeight() - 10, getWidth() - 100, 30));
         addChild(ground);
-
-		//Adds a pentagon at the beginning of the game?
-		//spPentagon pentagon = new Pentagon(_world, getSize() / 2 + Vector2(0.0f, 92.0f), 1);
-		//addChild(pentagon);
 
 		//background moved to here
 		background = new Sprite; //had a type before
@@ -268,10 +201,9 @@ public:
 		//background->attachTo(actor);
     }
 
-	//Update loop for the world
+	//Update loop for the world (handles the physics)
     void doUpdate(const UpdateState& us)
     {
-        //in real project you should make steps with fixed dt, check box2d documentation
         _world->Step(us.dt / 1000.0f, 6, 2);
 
         //update each body position on display
@@ -418,29 +350,9 @@ public:
 			_world->DestroyBody(body);
 
 			actor->detach();
-
-            /*spActor actor = safeSpCast<Actor>(event->target);
-            b2Body* body = (b2Body*)actor->getUserData();
-
-            Vector2 dir = actor->getPosition() - te->localPosition;
-            dir = dir / dir.length() * body->GetMass() * 200;
-
-            body->ApplyForceToCenter(b2Vec2(dir.x, dir.y), true);
-
-            spSprite sprite = new Sprite();
-            sprite->setResAnim(gameResources.getResAnim("shot"));
-            Vector2 local = actor->parent2local(te->localPosition);
-            sprite->setPosition(local);
-            sprite->setAnchor(Vector2(0.5f, 0.5f));
-            sprite->attachTo(actor);*/
         }
     }
 };
-
-//MOVED TRIANGLE TO HERE
-
-
-
 
 void example_preinit()
 {
@@ -457,14 +369,6 @@ void example_init()
     spMainActor actor = new MainActor;
     //and add it to Stage as child
     getStage()->addChild(actor);
-
-
-	//background moved from here
-	//spSprite background = new Sprite;
-	//background->setResAnim(gameResources.getResAnim("level1"));
-	//background->setAnchor(Vector2(0.5f, 1.0f));
-	//background->setPosition(Vector2(480, 610.0f));
-	//background->attachTo(actor);
 }
 
 void example_destroy()
