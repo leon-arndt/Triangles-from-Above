@@ -17,7 +17,7 @@ DECLARE_SMART(MainActor, spMainActor);
 
 
 const float SCALE = 100.0f;
-const int LEVELCOUNT = 3;
+const int LEVELCOUNT = 4;
 
 int currentLevel = 0;
 
@@ -183,6 +183,7 @@ public:
 		spButton gravButton = new Button;
 		gravButton->setX(getWidth() - gravButton->getWidth() - 5);
 		gravButton->setY(90);
+		gravButton->setPriority(32000); //Ensures the button is drawn on top
 		gravButton->attachTo(this);
 		gravButton->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::enableGravity));
 
@@ -199,6 +200,7 @@ public:
 		spButton restartButton = new Button;
 		restartButton->setX(getWidth() - restartButton->getWidth() - 5);
 		restartButton->setY(160);
+		restartButton->setPriority(32000); //Ensures the button is drawn on top
 		restartButton->attachTo(this);
 		restartButton->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::restart));
 
@@ -215,6 +217,7 @@ public:
 		spButton nextLevelButton = new Button;
 		nextLevelButton->setX(getWidth() - restartButton->getWidth() - 5);
 		nextLevelButton->setY(230);
+		nextLevelButton->setPriority(32000); //Ensures the button is drawn on top
 		nextLevelButton->attachTo(this);
 		nextLevelButton->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::nextLevel));
 
@@ -384,6 +387,9 @@ public:
 			break;
 		case 2:
 			background->setResAnim(gameResources.getResAnim("level3"));
+			break;
+		case 3:
+			background->setResAnim(gameResources.getResAnim("level4"));
 			break;
 		}
 		

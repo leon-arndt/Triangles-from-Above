@@ -12,7 +12,8 @@
     <image file="level1.png" />
     <image file="level2.png" />
     <image file="level3.png" />x
-	</atlas>
+    <image file="level4.png" />x
+  </atlas>
 
 <!--FONTS GO HERE-->
 	<set path = "fonts" />
