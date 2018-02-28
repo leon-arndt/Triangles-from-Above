@@ -32,11 +32,11 @@ Box2D already uses linear memory to hold an array filled with all bodies and Oxy
 I want to write my own game engine next which abstracts these two behaviors more so that there is only one pool of linear memory for both.
 I was unable to place the triangle inside its own .cpp file because of the way smart pointers are declared within Oxygine. I believe there is a workaround for this but I was not able to find it. I will try to fix this in the future.
 
-## Known Bugs
+### Known Bugs
 - Levels are not switched automatically
 - Triangles sometimes become elastic when landing on a vertex
 
-## References
+### References
 1. [Understanding custom polygons in Box2D](http://www.emanueleferonato.com/2008/12/19/understanding-custom-polygons-in-box2d/)
 2. [Tobias Stein The Entity-Component-System](https://www.gamasutra.com/blogs/TobiasStein/20171122/310172/The_EntityComponentSystem__An_awesome_gamedesign_pattern_in_C_Part_1.php)
 3. [Fixtures in Box2D](http://www.iforce2d.net/b2dtut/fixtures)
