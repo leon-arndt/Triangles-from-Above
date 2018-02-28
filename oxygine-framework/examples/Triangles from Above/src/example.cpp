@@ -2,8 +2,7 @@
 #include "Box2D/Box2D.h"
 #include "Box2DDebugDraw.h"
 #include <iostream>
-#include <list>
-#include <vector>
+#include <string>
 
 using namespace oxygine;
 using namespace std;
@@ -309,24 +308,14 @@ public:
 		//loop through the levels
 		currentLevel = (currentLevel + 1) % LEVELCOUNT;
 		
-		//simple switch case to show the correct level
-		switch (currentLevel) {
-		case 0:
-			background->setResAnim(gameResources.getResAnim("level1"));
-			break;
-		case 1:
-			background->setResAnim(gameResources.getResAnim("level2"));
-			break;
-		case 2:
-			background->setResAnim(gameResources.getResAnim("level3"));
-			break;
-		case 3:
-			background->setResAnim(gameResources.getResAnim("level4"));
-			break;
-		}
+		//convert the currentLevel int to a string and then load the resource
+		std::string levelName;
+		levelName = "level" + std::to_string(currentLevel + 1); //"level" + "0" --> level1
+		background->setResAnim(gameResources.getResAnim(levelName));
 		
 	}
 
+	//Entity Component System Event Sourcing inspired by Tobias Stein
     void click(Event* event)
     {
         TouchEvent* te = safeCast<TouchEvent*>(event);
