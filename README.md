@@ -4,7 +4,7 @@
 Watch as the triangles fall down from heaven. Control Gravity with one click.
 Match the background as closely as possible in this relaxing experimental sandbox game.
 
-*The source code is located at*	**\oxygine-framework\examples\Triangles from Above**
+*The source code is located at*	**/oxygine-framework/examples/Triangles from Above**
 
 
 ## Premise
